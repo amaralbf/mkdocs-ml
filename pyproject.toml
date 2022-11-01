@@ -8,7 +8,7 @@ profile = 'black'
 [tool.coverage.run]
 branch = true
 parallel = true
-source = ["mkdocs-ml"]
+source = ["mkdocs_ml"]
 command_line = "-m pytest tests"
 
 [tool.coverage.paths]
