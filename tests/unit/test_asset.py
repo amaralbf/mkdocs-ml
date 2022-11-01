@@ -1,9 +1,10 @@
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-import pytest
 
 from mkdocs_ml.asset import MatplotlibAsset
+
+# import pytest
 
 
 def test_plot_png_creation(tmp_path: Path):

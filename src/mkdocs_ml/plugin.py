@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal, Optional, Tuple
 
 # from mkdocs.config import config_options
 from mkdocs.config.defaults import MkDocsConfig
@@ -11,7 +11,7 @@ MKDOCS_ML_DIRNAME = 'mkdocs-ml-data'
 
 
 class Plugin(BasePlugin):
-    config_scheme = tuple()
+    config_scheme: Tuple = tuple()
 
     def on_startup(
         self, *, command: Literal['build', 'gh-deploy', 'serve'], dirty: bool
