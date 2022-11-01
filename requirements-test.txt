@@ -1,0 +1,6 @@
+pytest
+coverage[toml]
+hypothesis[pandas]
+tox
+
+matplotlib
