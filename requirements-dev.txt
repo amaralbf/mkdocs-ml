@@ -10,13 +10,7 @@ isort==5.10.1
 mypy==0.961
 
 # docs
-# mkdocs-material
-# mkdocstrings[python]
+mkdocs-material
 
 # jupyter
 jupyterlab
-
-
-numpy
-pandas
-matplotlib

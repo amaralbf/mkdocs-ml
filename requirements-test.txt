@@ -4,3 +4,5 @@ hypothesis[pandas]
 tox
 
 matplotlib
+numpy
+pandas
