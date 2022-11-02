@@ -6,3 +6,4 @@ tox
 matplotlib
 numpy
 pandas
+tabulate
