@@ -42,3 +42,12 @@ class TableAsset:
 
     def save(self, data_dir: Path):
         self.data.to_markdown(data_dir / self.filename)
+
+
+def get_asset_class_from_data(data):
+    if isinstance(data, str):
+        return TextAsset
+    elif isinstance(data, pd.DataFrame):
+        return TableAsset
+    elif isinstance(data, Figure):
+        return MatplotlibAsset

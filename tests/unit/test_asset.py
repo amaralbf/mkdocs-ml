@@ -2,10 +2,14 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import pytest
 
-from mkdocs_ml.asset import MatplotlibAsset, TableAsset, TextAsset
-
-# import pytest
+from mkdocs_ml.asset import (
+    MatplotlibAsset,
+    TableAsset,
+    TextAsset,
+    get_asset_class_from_data,
+)
 
 
 def test_plot_png_creation(tmp_path: Path):
@@ -53,3 +57,15 @@ def test_table_asset_file_creation_from_dataframe(tmp_path: Path):
     filename = str(files[0])
     with open(tmp_path / filename, 'rt') as f:
         assert f.read() == df.to_markdown()
+
+
+@pytest.mark.parametrize(
+    ['data', 'expected_class'],
+    [
+        ('string', TextAsset),
+        (plt.subplots()[0], MatplotlibAsset),
+        (pd.DataFrame(), TableAsset),
+    ],
+)
+def test_get_asset_class_from_data(data, expected_class):
+    assert get_asset_class_from_data(data) == expected_class
