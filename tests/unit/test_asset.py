@@ -1,8 +1,9 @@
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from mkdocs_ml.asset import MatplotlibAsset, TextAsset
+from mkdocs_ml.asset import MatplotlibAsset, TableAsset, TextAsset
 
 # import pytest
 
@@ -34,7 +35,21 @@ def test_text_file_creation_from_string(tmp_path: Path):
     assert len(files) == 1
 
     filename = str(files[0])
-    assert KEY in filename and filename.endswith('.txt')
-
     with open(tmp_path / filename, 'rt') as f:
         assert f.read() == TEXT
+
+
+def test_table_asset_file_creation_from_dataframe(tmp_path: Path):
+    KEY = 'table'
+    df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+
+    asset = TableAsset(key=KEY, data=df)
+    asset.save(data_dir=tmp_path)
+
+    files = list(tmp_path.iterdir())
+
+    assert len(files) == 1
+
+    filename = str(files[0])
+    with open(tmp_path / filename, 'rt') as f:
+        assert f.read() == df.to_markdown()

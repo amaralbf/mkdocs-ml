@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pandas as pd
 from matplotlib.figure import Figure
 
 
@@ -28,3 +29,16 @@ class TextAsset:
     @staticmethod
     def generate_filename(key):
         return f'{key}.txt'
+
+
+class TableAsset:
+    def __init__(self, key, data: pd.DataFrame):
+        self.filename = self.generate_filename(key)
+        self.data = data
+
+    @staticmethod
+    def generate_filename(key):
+        return f'{key}.txt'
+
+    def save(self, data_dir: Path):
+        self.data.to_markdown(data_dir / self.filename)
