@@ -12,6 +12,16 @@ from mkdocs_ml.asset import (
 )
 
 
+@pytest.fixture
+def plot_asset():
+    fig, ax = plt.subplots()
+    ax.plot([1, 2, 3])
+    KEY = 'plot'
+
+    asset = MatplotlibAsset(key=KEY, data=fig)
+    return asset
+
+
 def test_plot_png_creation(tmp_path: Path):
     fig, ax = plt.subplots()
     ax.plot([1, 2, 3])

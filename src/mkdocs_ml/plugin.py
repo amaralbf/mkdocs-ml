@@ -1,4 +1,3 @@
-import json
 import re
 from pathlib import Path
 from typing import Literal, Optional, Tuple
@@ -6,6 +5,8 @@ from typing import Literal, Optional, Tuple
 # from mkdocs.config import config_options
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin, Config
+
+from mkdocs_ml.asset import AssetCollection
 
 MKDOCS_ML_DIRNAME = 'mkdocs-ml-data'
 
@@ -37,14 +38,13 @@ class Plugin(BasePlugin):
     #     print(f'{config=}')
 
     def on_page_markdown(self, markdown: str, *, page, config, files):
-        with open(self.data_dir / 'mapping.json', 'rt') as f:
-            mapping = json.load(f)
+        asset_collection = AssetCollection(self.data_dir)
 
         PATTERN = r'\{ml:([^}]+)\}'
         for match in re.finditer(PATTERN, markdown):
             old = match.group(0)
-            alias = match.group(1)
-            new = f'![]({MKDOCS_ML_DIRNAME}/{mapping[alias]})'
+            key = match.group(1)
+            new = asset_collection.get_asset_markdown(key, self.docs_dir)
             markdown = markdown.replace(old, new)
 
         return markdown
