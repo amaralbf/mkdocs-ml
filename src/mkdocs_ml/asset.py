@@ -22,12 +22,12 @@ class MatplotlibAsset:
             },
         }
 
+    def generate_filename(self):
+        return f'{self.key}.png'
+
     @staticmethod
     def get_markdown(image_path, docs_dir: Path):
         return f'![]({Path(image_path).relative_to(docs_dir)})'
-
-    def generate_filename(self):
-        return f'{self.key}.png'
 
 
 class TextAsset:
@@ -66,6 +66,9 @@ def get_asset_class_from_data(data):
         return MatplotlibAsset
 
 
+ASSETS_COLLECTION_FILE_NAME = 'assets_info.json'
+
+
 class AssetCollection:
     def __init__(self, data_dir: Path, clear=False) -> None:
         self.filepath = self.get_filepath(data_dir)
@@ -74,7 +77,7 @@ class AssetCollection:
 
     @staticmethod
     def get_filepath(data_dir: Path) -> Path:
-        return data_dir / 'assets_info.json'
+        return data_dir / ASSETS_COLLECTION_FILE_NAME
 
     def create_file(self):
         with open(self.filepath, 'wt') as f:
