@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 from typing import Literal, Optional, Tuple
 
@@ -6,7 +5,7 @@ from typing import Literal, Optional, Tuple
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin, Config
 
-from mkdocs_ml.asset import AssetCollection
+from mkdocs_ml.markdown import MarkdownCompleter
 
 MKDOCS_ML_DIRNAME = 'mkdocs-ml-data'
 
@@ -38,13 +37,7 @@ class Plugin(BasePlugin):
     #     print(f'{config=}')
 
     def on_page_markdown(self, markdown: str, *, page, config, files):
-        asset_collection = AssetCollection(self.data_dir)
+        completer = MarkdownCompleter(docs_dir=self.docs_dir, data_dir=self.data_dir)
+        processed_markdown = completer.complete_markdown(markdown)
 
-        PATTERN = r'\{ml:([^}]+)\}'
-        for match in re.finditer(PATTERN, markdown):
-            old = match.group(0)
-            key = match.group(1)
-            new = asset_collection.get_asset_markdown(key, self.docs_dir)
-            markdown = markdown.replace(old, new)
-
-        return markdown
+        return processed_markdown

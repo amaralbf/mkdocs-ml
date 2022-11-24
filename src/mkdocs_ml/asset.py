@@ -1,5 +1,4 @@
 import json
-from importlib import import_module
 from pathlib import Path
 
 import pandas as pd
@@ -90,15 +89,8 @@ class AssetCollection:
         with open(self.filepath, 'wt') as f:
             json.dump(collection_dict, f)
 
-    def get_asset_markdown(self, key: str, docs_dir):
+    def get_asset_info(self, key: str):
         with open(self.filepath, 'rt') as f:
             collection_dict = json.load(f)
             asset_info = collection_dict[key]
-            class_name = asset_info['class']
-            asset_module = import_module('mkdocs_ml.asset')
-            class_obj = getattr(asset_module, class_name)
-            markdown = class_obj.get_markdown(**asset_info['args'], docs_dir=docs_dir)
-        return markdown
-
-
-# def create_asset_from_collection_format(asset_in_collection_format):
+        return asset_info
