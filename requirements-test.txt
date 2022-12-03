@@ -1,4 +1,5 @@
 pytest
+pytest-cases
 coverage[toml]
 hypothesis[pandas]
 tox
