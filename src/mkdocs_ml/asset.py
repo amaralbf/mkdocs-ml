@@ -66,7 +66,7 @@ def get_asset_class_from_data(data):
         return MatplotlibAsset
 
 
-ASSETS_COLLECTION_FILE_NAME = 'assets_info.json'
+ASSETS_COLLECTION_FILE_NAME = Path('assets_info.json')
 
 
 class AssetCollection:
